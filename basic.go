@@ -13,7 +13,7 @@ import (
 
 	_ "github.com/jinzhu/gorm/dialects/sqlite"
 	"github.com/usdevs/cinnabot/model"
-	"gopkg.in/telegram-bot-api.v4"
+	tgbotapi "gopkg.in/telegram-bot-api.v4"
 )
 
 //Test functions [Not meant to be used in bot]
@@ -122,7 +122,7 @@ func (cb *Cinnabot) Resources(msg *message) {
 		cb.SendTextMessage(int(msg.Chat.ID), resources[key])
 	} else {
 		var values string = ""
-		for key, _ := range resources {
+		for key := range resources {
 			values += key + " : " + resources[key] + "\n"
 		}
 		msg := tgbotapi.NewMessage(msg.Chat.ID, values)
@@ -203,7 +203,7 @@ func (cb *Cinnabot) Weather(msg *message) {
 	log.Print("The closest location is " + nameMinLoc)
 
 	var forecast string
-	for i, _ := range wf.FD[0].FMD {
+	for i := range wf.FD[0].FMD {
 		if wf.FD[0].FMD[i].Name == nameMinLoc {
 			forecast = wf.FD[0].FMD[i].Forecast
 			break
