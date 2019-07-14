@@ -11,12 +11,12 @@ import (
 	"math"
 	"regexp"
 
-	_ "github.com/jinzhu/gorm/dialects/sqlite"
 	"github.com/usdevs/cinnabot/model"
 	tgbotapi "gopkg.in/telegram-bot-api.v4"
 )
 
 //Test functions [Not meant to be used in bot]
+
 // SayHello says hi.
 func (cb *Cinnabot) SayHello(msg *message) {
 	cb.SendTextMessage(int(msg.Chat.ID), "Hello there, "+msg.From.FirstName+"!")
@@ -106,7 +106,7 @@ func (cb *Cinnabot) About(msg *message) {
 	cb.SendTextMessage(int(msg.Chat.ID), "Touch me: https://github.com/pengnam/Cinnabot")
 }
 
-//Link returns useful resources
+// Resources returns useful resources
 func (cb *Cinnabot) Resources(msg *message) {
 	resources := make(map[string]string)
 	resources["usplife"] = "[fb page](https://www.facebook.com/groups/usplife/)"
@@ -115,13 +115,13 @@ func (cb *Cinnabot) Resources(msg *message) {
 	resources["usc"] = "[usc web](http://www.nususc.com/MainPage.aspx)"
 	resources["study groups"] = "@USPhonebook\\_bot"
 
-	var key string = strings.ToLower(strings.Join(msg.Args, " "))
-	log.Print(key)
+	key := strings.ToLower(strings.Join(msg.Args, " "))
+
 	_, ok := resources[key]
 	if ok {
 		cb.SendTextMessage(int(msg.Chat.ID), resources[key])
 	} else {
-		var values string = ""
+		values := ""
 		for key := range resources {
 			values += key + " : " + resources[key] + "\n"
 		}
@@ -132,22 +132,22 @@ func (cb *Cinnabot) Resources(msg *message) {
 	}
 }
 
-//Structs for weather forecast function
+// WeatherForecast stores area metadata and forecast data
 type WeatherForecast struct {
-	AM []AreaMetadata `json:"area_metadata"`
-	FD []ForecastData `json:"items"`
+	AM []areaMetadata `json:"area_metadata"`
+	FD []forecastData `json:"items"`
 }
 
-type AreaMetadata struct {
+type areaMetadata struct {
 	Name string            `json:"name"`
 	Loc  tgbotapi.Location `json:"label_location"`
 }
 
-type ForecastData struct {
-	FMD []ForecastMetadata `json:"forecasts"`
+type forecastData struct {
+	FMD []forecastMetadata `json:"forecasts"`
 }
 
-type ForecastMetadata struct {
+type forecastMetadata struct {
 	Name     string `json:"area"`
 	Forecast string `json:"forecast"`
 }
@@ -308,7 +308,7 @@ func checkAdmin(cb *Cinnabot, msg *message) bool {
 	return false
 }
 
-// function to count number of users and messages
+// GetStats counts number of users and messages
 func (cb *Cinnabot) GetStats(msg *message) {
 
 	db := model.InitializeDB()
