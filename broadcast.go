@@ -4,11 +4,11 @@ import (
 	"log"
 	"strconv"
 
-	_ "github.com/jinzhu/gorm/dialects/sqlite"
 	"github.com/patrickmn/go-cache"
-	"gopkg.in/telegram-bot-api.v4"
+	tgbotapi "gopkg.in/telegram-bot-api.v4"
 )
 
+// CBS is the Cinnamon Broadcasting Service. Unused.
 func (cb *Cinnabot) CBS(msg *message) {
 
 	if cb.CheckArgCmdPair("/cbs", msg.Args) {
