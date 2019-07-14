@@ -14,7 +14,7 @@ import (
 
 	"github.com/patrickmn/go-cache"
 	"github.com/usdevs/cinnabot/model"
-	"gopkg.in/telegram-bot-api.v4"
+	tgbotapi "gopkg.in/telegram-bot-api.v4"
 )
 
 type bot interface {
@@ -170,7 +170,7 @@ func (cb *Cinnabot) Router(msg tgbotapi.Message) {
 	}
 }
 
-// Checks if arg can be used with command
+// CheckArgCmdPair checks if arg can be used with command
 // Used to supplement cache as cache only records functions as states
 func (cb *Cinnabot) CheckArgCmdPair(cmd string, args []string) bool {
 	key := "" //Messages with no text in message
